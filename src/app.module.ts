@@ -8,21 +8,24 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 // import { TypeOrmModule } from '@nestjs/typeorm';
 import { PuppterModule } from './puppter/puppter.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProgressModule } from './progress/progress.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
   }),ScheduleModule.forRoot(),
-// TypeOrmModule.forRoot({
-//   type: 'postgres',
-//   host: process.env.DB_HOST, 
-//   port: process.env.DB_PORT,
-//   username: process.env.DB_USERNAME,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_NAME,
-// }),
+TypeOrmModule.forRoot({
+  type: 'postgres',
+  host: process.env.DB_HOST, 
+  port:5432,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+}),
  SchedularModule,
-PuppterModule ],
+PuppterModule,
+ProgressModule ],
   controllers: [AppController, SchedularController],
   providers: [AppService],
 })
