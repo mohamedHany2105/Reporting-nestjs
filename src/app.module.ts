@@ -10,6 +10,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { PuppterModule } from './puppter/puppter.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProgressModule } from './progress/progress.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -25,7 +26,8 @@ TypeOrmModule.forRoot({
 }),
  SchedularModule,
 PuppterModule,
-ProgressModule ],
+ProgressModule,
+MailModule ],
   controllers: [AppController, SchedularController],
   providers: [AppService],
 })

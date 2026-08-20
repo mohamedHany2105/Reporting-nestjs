@@ -7,6 +7,7 @@ import { CreateProgressDto } from './dto/create-progress.dto';
 export class ProgressController {
   constructor(private readonly progressService: ProgressService) {}
 
+
   @Post()
   create(@Param('id') createProgressDto: CreateProgressDto) {
     return this.progressService.createProgress(createProgressDto);

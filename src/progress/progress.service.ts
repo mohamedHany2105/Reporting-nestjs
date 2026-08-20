@@ -4,6 +4,7 @@ import { launch, Browser } from 'puppeteer';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Progress } from './entities/progress.entity';
 import { Repository } from 'typeorm/browser/repository/Repository.js';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class ProgressService {
@@ -24,8 +25,10 @@ private async getBrowser(): Promise<Browser> {
     }
     return this.browser;
 }
-
-
+// the report will be sended every 7-days
+@Cron("* * * 7 * * ",{
+  name:"progres"
+})
  async createProgress(createProgressDto: CreateProgressDto){
   const { id } = createProgressDto;
   const account= await this.recordRepository.findOne({ where: { id } });
@@ -35,7 +38,22 @@ throw new Error(`Progress record with id ${id} not found`);
 
   return account;
  }
+ 
+@Cron("* * * 7 * * ",{
+  name:"progress_mail"
+})
+ async sendEmail(createProgressDto: CreateProgressDto){
+  const { id } = createProgressDto;
+  const account= await this.recordRepository.findOne({ where: { id } });
+    if(!account){
+throw new Error(`Progress record with id ${id} not found`);
 
+}
+// continue the logic of Email
+// 
+// const email
+// email.send(*email format*)
+ }
 
  async generatePDF(){
       const browser = await this.getBrowser();
@@ -58,4 +76,6 @@ throw new Error(`Progress record with id ${id} not found`);
     }
 
  }
+
+
 }
